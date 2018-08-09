@@ -44,18 +44,41 @@ var generateMnemonic = exports.generateMnemonic = function generateMnemonic() {
 
 var EthHdWallet = exports.EthHdWallet = function () {
   _createClass(EthHdWallet, null, [{
-    key: 'fromMnemonic',
+    key: 'walletFromPKey',
 
     /**
      * Construct HD wallet instance from given mnemonic
      * @param  {String} mnemonic Mnemonic/seed string.
      * @return {EthHdWallet}
      */
-    value: function fromMnemonic(mnemonic) {
+    value: function walletFromPKey(xprivkey, path) {
+
+      if (typeof(path) != "undefined" ) {
+        var derivation_path = path;
+      } else {
+        var derivation_path = BIP44_PATH;
+      }
+      return new EthHdWallet(xprivkey, derivation_path);
+    }
+
+    /**
+     * @constructor
+     * @param  {String} hdKey Extended HD private key
+     */
+
+  },{
+    key: 'pKeyFromMnemonic',
+
+    /**
+     * Construct HD wallet instance from given mnemonic
+     * @param  {String} mnemonic Mnemonic/seed string.
+     * @return {EthHdWallet}
+     */
+    value: function pKeyFromMnemonic(mnemonic) {
       var _toHDPrivateKey = new _bitcoreMnemonic2.default(mnemonic).toHDPrivateKey(),
           xprivkey = _toHDPrivateKey.xprivkey;
 
-      return new EthHdWallet(xprivkey);
+      return xprivkey;
     }
 
     /**
@@ -65,11 +88,11 @@ var EthHdWallet = exports.EthHdWallet = function () {
 
   }]);
 
-  function EthHdWallet(xPrivKey) {
-    _classCallCheck(this, EthHdWallet);
+  function EthHdWallet(xPrivKey, path) {
+    _classCallCheck(this, EthHdWallet);  
 
     this._hdKey = (0, _hdkey.fromExtendedKey)(xPrivKey);
-    this._root = this._hdKey.derivePath(BIP44_PATH);
+    this._root = this._hdKey.derivePath(path);
     this._children = [];
   }
 
@@ -82,8 +105,9 @@ var EthHdWallet = exports.EthHdWallet = function () {
 
   _createClass(EthHdWallet, [{
     key: 'generateAddresses',
-    value: function generateAddresses(num) {
-      var newKeys = this._deriveNewKeys(num);
+    value: function generateAddresses(num, index) {
+      var newKeys = this._deriveNewKeys(num, index);
+      // console.log(num, index)
 
       return newKeys.map(function (k) {
         return k.address;
@@ -239,7 +263,6 @@ var EthHdWallet = exports.EthHdWallet = function () {
     value: function recoverSignerPublicKey(_ref8) {
       var signature = _ref8.signature,
           data = _ref8.data;
-
       return _ethSigUtil2.default.recoverPersonalSignature({ sig: signature, data: data });
     }
 
@@ -255,16 +278,18 @@ var EthHdWallet = exports.EthHdWallet = function () {
 
   }, {
     key: '_deriveNewKeys',
-    value: function _deriveNewKeys(num) {
-      var count = num;
+    value: function _deriveNewKeys(num, index) {
+      var count = num + index;
+      // console.log(index, count);
 
-      while (0 <= --count) {
-        var child = this._root.deriveChild(this._children.length).getWallet();
-
+      while (index < count) {
+        var child = this._root.deriveChild(index).getWallet();
+        // console.log(index)
         this._children.push({
           wallet: child,
           address: (0, _ethereumjsUtil.addHexPrefix)(child.getAddress().toString('hex'))
         });
+        index ++ 
       }
 
       return this._children.slice(-num);

@@ -1,0 +1,115 @@
+{
+  "_args": [
+    [
+      "eth-hd-wallet@0.4.0",
+      "/Users/alexandermorris/Documents/GitHub/HD_DepositCtrl"
+    ]
+  ],
+  "_from": "eth-hd-wallet@0.4.0",
+  "_id": "eth-hd-wallet@0.4.0",
+  "_inBundle": false,
+  "_integrity": "sha512-i7p0UGkGuJQ+3yfC5KYSWlxkRkKb50fCODNS/slbA5zs028rd6EAV3p9kmL2E8cN7+kFL8PujjCvcAHCDGEooQ==",
+  "_location": "/eth-hd-wallet",
+  "_phantomChildren": {
+    "bs58": "4.0.1",
+    "coinstring": "2.3.0",
+    "create-hash": "1.2.0",
+    "ethereumjs-util": "5.2.0",
+    "safe-buffer": "5.1.2",
+    "scrypt.js": "0.2.0",
+    "secp256k1": "3.5.0"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "eth-hd-wallet@0.4.0",
+    "name": "eth-hd-wallet",
+    "escapedName": "eth-hd-wallet",
+    "rawSpec": "0.4.0",
+    "saveSpec": null,
+    "fetchSpec": "0.4.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/eth-hd-wallet/-/eth-hd-wallet-0.4.0.tgz",
+  "_spec": "0.4.0",
+  "_where": "/Users/alexandermorris/Documents/GitHub/HD_DepositCtrl",
+  "author": {
+    "name": "Ramesh Nair",
+    "email": "ram@hiddentao.com"
+  },
+  "bugs": {
+    "url": "https://github.com/meth-project/eth-hd-wallet/issues"
+  },
+  "dependencies": {
+    "bitcore-mnemonic": "^1.2.5",
+    "eth-sig-util": "^1.4.2",
+    "ethereumjs-tx": "^1.3.3",
+    "ethereumjs-util": "^5.1.2",
+    "ethereumjs-wallet": "^0.6.0"
+  },
+  "description": "Lightweight Ethereum HD wallet implementation based on BIP-44 standard",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-jest-assertions": "0.0.3",
+    "babel-preset-env": "^1.6.1",
+    "es6-promisify": "^5.0.0",
+    "eslint": "^4.4.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "geth-private": "^2.0.0",
+    "jest": "^21.2.1",
+    "web3": "0.20.2"
+  },
+  "homepage": "https://github.com/meth-project/eth-hd-wallet#readme",
+  "jest": {
+    "roots": [
+      "./src/"
+    ],
+    "testMatch": [
+      "**/?(*.)test.js"
+    ],
+    "collectCoverageFrom": [
+      "**/*.js"
+    ],
+    "coverageReporters": [
+      "html",
+      "text",
+      "text-summary"
+    ],
+    "setupTestFrameworkScriptFile": "./.jest/setupTestFramework.js"
+  },
+  "keywords": [
+    "ethereum",
+    "wallet",
+    "hd",
+    "bip39",
+    "bip44",
+    "eip85",
+    "cryptocurrency",
+    "bitcoin",
+    "crypto"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "eth-hd-wallet",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meth-project/eth-hd-wallet.git"
+  },
+  "scripts": {
+    "build": "babel --ignore test.js,__fixtures__ --out-dir dist src",
+    "lint": "eslint ./src",
+    "prepublish": "npm run lint && npm run test && npm run build",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "version": "0.4.0"
+}
